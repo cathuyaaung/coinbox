@@ -1,9 +1,22 @@
 <ion-view view-title="Account">
-  <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
-  </ion-content>
+    <ion-content class="padding">
+        <div class="card">
+            <div class="item item-avatar">
+                <img src="http://graph.facebook.com/{{user.id}}/picture">
+                <h2>{{user.name}}</h2>
+                <p>{{user.email}}</p>
+            </div>
+        </div>
+        <!-- <ion-list>
+            <ion-toggle  ng-model="settings.enableFriends">
+                Enable Friends
+            </ion-toggle>
+        </ion-list> -->
+        <br>
+        <br>
+        <button class="button button-block button-assertive" ng-click="fbLogout()">
+          Logout
+        </button>
+
+    </ion-content>
 </ion-view>

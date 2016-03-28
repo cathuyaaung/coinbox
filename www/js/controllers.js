@@ -1,5 +1,19 @@
 angular.module('starter.controllers', [])
 
+.controller('LoginCtrl', function($scope, ngFB, $state) {
+    $scope.fbLogin = function () {
+        ngFB.login({scope: 'email'})
+            .then(function (response) {
+                if (response.status === 'connected') {
+                    console.log('facebook login success');
+                    $state.go('tab.dash');
+                }else{
+                    alert('Facebook login failed');
+                }
+            });
+    };
+})
+
 .controller('DashCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {
@@ -21,8 +35,28 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, ngFB, $state) {
+    ngFB.api({
+        path: '/me',
+        params: {fields: 'id,name,email,gender,location,hometown'}
+    }).then(
+        function (user) {
+            $scope.user = user;
+            console.log(user);
+        },
+        function (error) {
+            alert('Facebook error: ' + error.error_description);
+        }
+    );
+
+    $scope.fbLogout = function () {
+        $state.go('login')
+    };
   $scope.settings = {
     enableFriends: true
   };
-});
+})
+
+
+
+;
